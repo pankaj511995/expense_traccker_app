@@ -9,12 +9,10 @@ module.exports=sequelize.define('Expense',{
     },
     amount:{
         type:Sequelize.INTEGER,
-        unique:false,
         allowNull:false
     },
     comment:{
         type:Sequelize.STRING,
-        unique:true,
         allowNull:false
     }, 
     catagory:{
