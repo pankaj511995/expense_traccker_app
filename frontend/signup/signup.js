@@ -8,6 +8,7 @@ document.querySelector('#signup').addEventListener('click', (e)=>{
             password:document.getElementById('password').value
          }
         axios.post(`http://localhost:3000/user/signup`,obj).then(e=>{
+            window.location.href='../signin/signin.html'
           message('success')
         }).catch(e=> {
             message(e.response.data.message)

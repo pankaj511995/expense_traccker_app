@@ -1,6 +1,6 @@
 const Sequelize=require('sequelize')
 const sequelize=require('../util/sequelize')
-module.exports=sequelize.define('Users',{
+module.exports=sequelize.define('User',{
     id:{
         type:Sequelize.INTEGER,
         primaryKey:true,

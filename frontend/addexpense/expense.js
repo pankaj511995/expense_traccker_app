@@ -1,14 +1,16 @@
+const token=localStorage.getItem('username')
+console.log(token,'token is ')
 document.getElementById('addExpense').addEventListener('click',addExpense)
 const addItem=document.getElementById('addItem')
 addItem.addEventListener('click',editDeletebtn)
 
 window.addEventListener('DOMContentLoaded', () => {
-    axios.get(`http://localhost:3000/expense/showexpense`).then(e=>{
+    axios.get(`http://localhost:3000/expense/showexpense`,{headers:{'authorization':token}}).then(e=>{
         const f=true
     e.data.forEach(e=>{
         totalAmount(e.amount)
         showAllItemOnScreen(e,f)
-    })
+    }) 
     })
 });
 function addExpense(e){
@@ -51,7 +53,7 @@ function showAllItemOnScreen(obj,screenload){
                 edit.value=obj.id
                
             }else{
-                axios.post(`http://localhost:3000/expense/addExpense`,obj).then(e=>{
+                axios.post(`http://localhost:3000/expense/addExpense`,obj,{headers:{'authorization':token}}).then(e=>{
                     const id=e.data.id
                     del.value=id
                     edit.value=id
@@ -74,15 +76,15 @@ try{
         const  id=e.target.value
         const amount=  e.target.parentElement.value
     if(edit){
-        await axios.get(`http://localhost:3000/expense/ediiAmount/${id}`)
-        .then(e=>{
-                document.getElementById('amount').value=e.data.amount
-                document.getElementById('comment').value=e.data.comment
-                document.getElementById('catagory').value=e.data.catagory
+        await axios.get(`http://localhost:3000/expense/ediiAmount/${id}`,{headers:{'authorization':token}})
+        .then(e=>{console.log('for editing',e.data)
+                document.getElementById('amount').value=e.data[0].amount
+                document.getElementById('comment').value=e.data[0].comment
+                document.getElementById('catagory').value=e.data[0].catagory
             })
     }
   
- axios.post(`http://localhost:3000/expense/deleteAmount/${id} `,amount) .then(f=>{  
+ axios.post(`http://localhost:3000/expense/deleteAmount/${id} `,{amount},{headers:{'authorization':token}}) .then(f=>{  
     totalAmount(-amount)
     addItem.removeChild(e.target.parentElement)})//deleting item after successfully deleting from backend
     }
@@ -91,23 +93,12 @@ try{
 
     function totalAmount(amount){
         const totalTable=document.getElementById('total')
-    // try{
-        // if(amount===0){
-        //     axios.get(`http://localhost:3000/expense/totalAmount`, {headers:{"Authorization": token}}).then(e=>{
-        //     totalTable.innerHTML=`Tottal Expense <button class="totalamount" >${e.data-amount}</button>`
-        //     totalTable.value=`${e.data-amount}`
-        // } )
-        // }else{
             if(!totalTable.value){
                 totalTable.value=Number(amount)
-                console.log(totalTable,'total amount is')
             }else{
-                console.log(totalTable.value,'after')
                 totalTable.value=Number(totalTable.value)+Number(amount)
             
             totalTable.innerHTML=`Tottal Expense <button class="totalamount" >${totalTable.value}</button>`
             }
-            
-        // }
-    // }catch(e){   console.log('error while calculating total amount',e) }
+          
     }

@@ -5,7 +5,9 @@ document.querySelector('#signin').addEventListener('click', async (e)=>{
                     email:document.getElementById('email').value,
                     password:document.getElementById('password').value
                  }
-             await axios.post(`http://localhost:3000/user/signin`,obj)
+            const tok=  await axios.post(`http://localhost:3000/user/signin`,obj)
+            localStorage.setItem('username',(tok.data.token))
+            window.location.href='../addexpense/expense.html'
                 message('success')
                     
      }catch(e){  

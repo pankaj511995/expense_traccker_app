@@ -1,5 +1,10 @@
 const User=require('../models/user')
 const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken')
+
+function generateToken(id,name){
+    return jwt.sign({id,name},process.env.JWT_TOKEN)
+}
 exports.signupUser=async(req,res)=>{
     try{
     const {name,email,password}=req.body
@@ -27,7 +32,8 @@ exports.signinUser=async(req,res)=>{
     }
     const user=await User.findOne({where:{email:email}})
      bcrypt.compare(password,user.password,(err,result)=>{
-        if(result)  res.status(200).json({success:true})
+        console.log(user.id,user.name,'user id and name')
+        if(result)  res.status(200).json({token:generateToken(user.id,user.name)})
         else res.status(404).json({message:'incorrect password'})
      }) 
 }catch(e){
