@@ -18,7 +18,7 @@ module.exports=sequelize.define('Users',{
         allowNull:false
     }, 
     password:{
-        type:Sequelize.INTEGER,
+        type:Sequelize.STRING,
         allowNull:false
     }
 

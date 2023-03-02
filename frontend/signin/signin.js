@@ -9,7 +9,7 @@ document.querySelector('#signin').addEventListener('click', async (e)=>{
                 message('success')
                     
      }catch(e){  
-        message(e.response.data.messaga)
+        message(e.response.data.message)
         console.log('error while sign in ',e)}           
 })
 function message(e){
