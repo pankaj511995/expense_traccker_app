@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link rel="stylesheet" href="expense.css">
+</head>
+<body>
+    <header>
+
+    </header>
+    <main>
+        <div class="form-div">
+            <strong class="sign">Add Expense</strong><button id="total"></button>
+            <br><div id="error1"><br><div id="error"></div>
+        <form action="" method="POST" class="form-control">
+            <label for="amount">Enter Amount:-</label>
+                <input type="number" id="amount" class="enter" required></span><br>
+            <label for="email">Your comment:-</label>
+                <input type="text" id="comment" class="enter" required><br>
+            <label for="expense">Chose Catagpry-</label>
+            <select name="enter" id="catagory">
+            <option value="food">Food</option>
+            <option value="Movi">Movies</option>
+            <option value="helth">Helth</option>
+            <option value="Upskill">UpSkill</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Party">Party</option>
+        </select>
+            <button class="btn" id="addExpense">Add Expense</button>
+        </div>
+            </form><br>
+            <div id="addItem"></div>
+            
+           
+         </div> 
+    </main>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="expense.js"></script>
+  
+
+</body>
+
+</html>

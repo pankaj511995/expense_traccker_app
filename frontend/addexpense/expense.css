@@ -1,0 +1,169 @@
+body{
+    background-color: rgb(91, 36, 142);
+}
+.form-div{
+    background-color: rgba(119, 186, 119, 0.776);
+    color: rgb(15, 14, 14);
+    width: 700px;
+   padding-bottom: 150px;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 30px;
+    position: absolute;
+    right: 30%;
+    left: 5%;
+    box-shadow: rgb(14, 218, 218);
+   
+}
+.enter{
+    border-radius: 15px;
+     width: 50%;
+     margin: .4rem;
+ }
+ #total{
+    position: absolute;
+    right: 5%;
+    width: 200px;
+    font-weight: 600;
+    text-align: left;
+    background-color: aqua;
+    height: 30px;
+}
+
+.per-page{
+    position: absolute;
+    right: 5%;
+    width: 40px;
+    border-color: #09d9f5;
+    font-weight: 700;
+}
+
+.page-btn{
+    position: relative;
+    width: 40px;
+    font-weight: 700;
+}
+.page-btn:active,.page-btn:hover{
+background-color: rgb(173, 159, 194);
+}
+
+#page-number{
+    width: 60%;
+    height: 30px;
+    padding: 3px;
+}
+.edit{
+    position:absolute;
+    right: 10%;
+    width: 10px;
+}
+
+
+#leader{
+background-color: rgb(196, 150, 150);
+}
+.btn{
+    width: 130px;
+    font-weight: 600;
+    height: 30px;
+    background-color: rgba(27, 27, 211, 0.982);
+    color: wheat;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.btn-pay{
+    width: 49%;
+    font-weight: 600;
+    height: 30px;
+    background-color: rgba(27, 27, 211, 0.982);
+    color: wheat;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.edit{
+    position:absolute;
+    right: 3%;
+    width: 40px;
+    border-radius: 10px;
+    background-color: rgb(7, 237, 23)
+}
+.delete{
+    position:absolute;
+    right: 15%;
+    width: 60px;
+    border-radius: 10px;
+    background-color: rgba(237, 7, 7, 0.785);
+   
+    
+}
+.download{
+    background-color: antiquewhite;
+}
+.st {
+    text-align: center;
+    background-color: #75dd70;
+    font-size: x-large;
+    
+}
+.total-col{
+    text-align: right;
+    background-color: rgba(68, 101, 130, 0.632);
+    font-size: larger;
+}
+.delete:hover,.edit:hover{
+    background-color: rgba(8, 8, 188, 0.847);
+    color: white;
+}
+.btn:hover,.btn-pay:hover{
+    background-color: rgb(4, 114, 59);
+}
+#error{
+    background-color: red;
+    color: white;
+}
+.error{
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+.sign{
+    font-size: x-large;
+    font-weight: 900;
+}
+.a:hover{
+    font-size: large;
+    font-weight: 700;
+    color: rgb(8, 24, 247);
+}
+.a{
+   
+    padding: 10px;
+    border-style: none;
+}
+
+.list{
+    list-style-type: none;
+    margin: 0.7rem;
+    border-color: rgba(119, 186, 119, 0.776);
+    border-style: dotted;
+    padding-left: 100px;
+    text-align: left;
+}
+#erroramount{
+    color: red;
+}
+
+#catagory{
+    border-radius: 8px;
+}
+.totalamount{
+    position: absolute;
+    right: 1%;
+    top: 0%;
+    height: 25px;
+    width: 85px;
+    background-color: aqua;
+    font-weight: 900;
+    border-style: none;
+}
+
