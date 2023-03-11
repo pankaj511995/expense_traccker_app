@@ -4,10 +4,13 @@ body{
 .form-div{
     background-color: rgba(119, 186, 119, 0.776);
     color: rgb(15, 14, 14);
-    width: 700px;
+    width: 450px;
+    /* width: 50%; */
+    /* min-width: 450px; */
    padding-bottom: 150px;
     padding-top: 10px;
-    text-align: center;
+    padding-left: 2rem;
+    text-align: left;
     border-radius: 30px;
     position: absolute;
     right: 30%;
@@ -19,11 +22,14 @@ body{
     border-radius: 15px;
      width: 50%;
      margin: .4rem;
+     border-style: none;
  }
  #total{
     position: absolute;
     right: 5%;
     width: 200px;
+    border-style: none;
+    border-radius: 5px;
     font-weight: 600;
     text-align: left;
     background-color: aqua;
@@ -63,13 +69,15 @@ background-color: rgb(173, 159, 194);
 background-color: rgb(196, 150, 150);
 }
 .btn{
-    width: 130px;
+    width: 140px;
     font-weight: 600;
-    height: 30px;
+    margin-left: 3rem;
+    height: 23px;
     background-color: rgba(27, 27, 211, 0.982);
     color: wheat;
     border-radius: 20px;
     cursor: pointer;
+    border-style: none;
 }
 .btn-pay{
     width: 49%;
@@ -84,18 +92,22 @@ background-color: rgb(196, 150, 150);
     position:absolute;
     right: 3%;
     width: 40px;
+    border-style: none;
     border-radius: 10px;
     background-color: rgb(7, 237, 23)
+    
 }
 .delete{
     position:absolute;
     right: 15%;
     width: 60px;
+    border-style: none;
     border-radius: 10px;
     background-color: rgba(237, 7, 7, 0.785);
    
     
 }
+
 .download{
     background-color: antiquewhite;
 }
@@ -111,8 +123,8 @@ background-color: rgb(196, 150, 150);
     font-size: larger;
 }
 .delete:hover,.edit:hover{
-    background-color: rgba(8, 8, 188, 0.847);
-    color: white;
+    background-color: rgba(218, 224, 22, 0.847);
+    color: rgb(26, 2, 2);
 }
 .btn:hover,.btn-pay:hover{
     background-color: rgb(4, 114, 59);
@@ -143,11 +155,23 @@ background-color: rgb(196, 150, 150);
 
 .list{
     list-style-type: none;
-    margin: 0.7rem;
+    /* margin: 0.7rem; */
     border-color: rgba(119, 186, 119, 0.776);
-    border-style: dotted;
-    padding-left: 100px;
+    border-style: none;
+   
+    padding-left: 10px;
     text-align: left;
+    font-size: large;
+    font-weight: 500;
+}
+#showleaderboard{
+    list-style-type: none;
+    font-size: large;
+    text-align: center;
+    font-style: none;
+    background-color: rgba(162, 241, 15, 0.185);
+    color: rgb(10, 0, 0);
+    font-weight: 500;
 }
 #erroramount{
     color: red;

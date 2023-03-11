@@ -35,6 +35,7 @@ function showpremium(){
     const isPremium=localStorage.getItem('isPremium')
     if(JSON.parse(isPremium)===true){
         document.getElementById('premiumLink').remove()
+        document.getElementById('leaderboard').innerHTML=` <button class="btn" >Show Leaderborad </button>` 
     }
    
 }catch(err){
@@ -42,3 +43,25 @@ function showpremium(){
 }
 }
 showpremium()
+
+
+document.getElementById('leaderboard').addEventListener('click',()=>{//leaderboard
+    axios.get(`http://localhost:3000/premium/leaderboard`).then(e=>{
+    console.log(e.data)
+    showleaderboard(e.data)
+    })
+    console.log('click')
+})
+
+function showleaderboard(obj){
+    let s=  document.getElementById('showleaderboard')
+    obj.forEach(e=>{
+        const li=document.createElement('li')
+        li.appendChild(document.createTextNode(`Name : ${e.name} total exp :${e.amount}`))
+        li.className-'listitem'
+      s.appendChild(li)
+    })
+  
+
+
+}
