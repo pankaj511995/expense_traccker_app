@@ -3,7 +3,7 @@ exports.addExpenseAmount=async(req,res)=>{
 try{
     const{amount,comment,catagory}=req.body
    const exp=await req.user.createExpense({amount:amount,comment:comment,catagory:catagory})
-   res.status(200).json(exp)
+   res.status(200).json(JSON.stringify( exp))
 }catch(e){
     console.log('error while adding item')
 }
@@ -19,7 +19,7 @@ exports.deleteAmount=async(req,res)=>{
 exports.ediiAmount=async(req,res)=>{
     try{
         const exp = await req.user.getExpenses({where:{id:req.params.id}})
-            res.status(200).json(exp)
+            res.status(200).json(JSON.stringify(exp))
      }catch(err){
          res.status(400).json({message:'something went wrong'})
      }
@@ -27,7 +27,7 @@ exports.ediiAmount=async(req,res)=>{
 exports.showAllExpense=async(req,res)=>{
     try{
         const exp= await req.user.getExpenses()
-        res.status(200).json(exp)
+        res.status(200).json(JSON.stringify(exp))
     }catch(err){
     res.status(400).json({message:'something went wrong'})
     }

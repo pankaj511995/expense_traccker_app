@@ -20,6 +20,10 @@ module.exports=sequelize.define('User',{
     password:{
         type:Sequelize.STRING,
         allowNull:false
+    },
+    isPremium:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
     }
 
 })

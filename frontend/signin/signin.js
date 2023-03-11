@@ -7,6 +7,7 @@ document.querySelector('#signin').addEventListener('click', async (e)=>{
                  }
             const tok=  await axios.post(`http://localhost:3000/user/signin`,obj)
             localStorage.setItem('username',(tok.data.token))
+            localStorage.setItem('isPremium',parseJwt(tok.data.token).isPremium)
             window.location.href='../addexpense/expense.html'
                 message('success')
                     
@@ -16,4 +17,14 @@ document.querySelector('#signin').addEventListener('click', async (e)=>{
 })
 function message(e){
     document.getElementById('error').innerHTML=e
+}
+
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
 }
