@@ -1,33 +1,39 @@
 const Expense=require('../models/expense')
+const sequelize=require('../util/sequelize')
 exports.addExpenseAmount=async(req,res)=>{
-try{
-    const{amount,comment,catagory}=req.body
-    const totalExpense=req.user.totalExpense+Number(amount)
-    const user=req.user.update({totalExpense:totalExpense})
-   const exp= await req.user.createExpense({amount:amount,comment:comment,catagory:catagory})
+    const t = await sequelize.transaction();
+try{ 
+        const{amount,comment,catagory}=req.body
+        const user=req.user.update({totalExpense:req.user.totalExpense+Number(amount)},{transaction:t})
+         const exp= req.user.createExpense({amount:amount,comment:comment,catagory:catagory},{transaction:t})
    
-   await Promise.all([exp,user])
-    // console.log(exp)
-    res.status(200).json( exp.id)
+        const pexp= await Promise.all([exp,user])
+        await t.commit()
+        res.status(200).json( pexp[0].id) 
 
-}catch(e){
+}catch(e){ 
+    await t.rollback()
     console.log('error while adding item')
-}
-}
+} 
+} 
 exports.deleteAmount=async(req,res)=>{
+    const t=await sequelize.transaction()
     try{
-        console.log(req.params.id,req.body.amount,'delete id is ')
-        const totalExpense=req.user.totalExpense-Number(req.body.amount)
-        const user=req.user.update({totalExpense:totalExpense})
-   await Expense.destroy({where:{id:req.params.id,UserId:req.user.id}})
-   res.status(200).json({success:true})
-}catch(err){
+        const user=req.user.update({totalExpense:req.user.totalExpense+Number(amount)},{transaction:t})
+        const exp= Expense.destroy({where:{id:req.params.id,UserId:req.user.id}},{transaction:t})
+
+             await Promise.all([exp,user]) 
+            await t.commit()
+             res.status(200).json({success:true})
+        
+    }catch(err){
+    await t.rollback()
     res.status(400).json({message:'something went wrong'})
 }
 }
 exports.ediiAmount=async(req,res)=>{
     try{
-        const exp = await req.user.getExpenses({where:{id:req.params.id}})
+            const exp = await req.user.getExpenses({where:{id:req.params.id}})
             res.status(200).json(exp)
      }catch(err){
          res.status(400).json({message:'something went wrong'})
