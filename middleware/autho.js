@@ -9,7 +9,7 @@ exports.authenticate= (req,res,next)=>{
                     next()
             }else res.status(404),json({message:'user not exist'})
         })
-    }catch(err){
+    }catch(err){ 
         console.log('error while authentication')
     }
 

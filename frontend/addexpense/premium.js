@@ -1,4 +1,5 @@
 const paymentbtn=document.getElementById('premiumLink')
+let Leaderboradshow=  document.getElementById('showleaderboard')
 paymentbtn.addEventListener('click',openRazorPayLink)
 
 async function openRazorPayLink(e){
@@ -48,18 +49,19 @@ showpremium()
 document.getElementById('leaderboard').addEventListener('click',()=>{//leaderboard
     axios.get(`http://localhost:3000/premium/leaderboard`).then(e=>{
     console.log(e.data)
+   
     showleaderboard(e.data)
     })
     console.log('click')
 })
 
 function showleaderboard(obj){
-    let s=  document.getElementById('showleaderboard')
+    Leaderboradshow.innerHTML=''    
     obj.forEach(e=>{
         const li=document.createElement('li')
-        li.appendChild(document.createTextNode(`Name : ${e.name} total exp :${e.amount}`))
+        li.appendChild(document.createTextNode(`Name :-> ${e.name}   : : total exp :->${e.amount}`))
         li.className-'listitem'
-      s.appendChild(li)
+      Leaderboradshow.appendChild(li)
     })
   
 

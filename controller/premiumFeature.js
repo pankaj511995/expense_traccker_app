@@ -1,5 +1,6 @@
 const Expense=require('../models/expense')
-const User=require('../models/user')
+const User=require('../models/user');
+const sequelize = require('../util/sequelize');
 function findingallvalue(user){
     const result=[]
     let count=0;
@@ -17,8 +18,17 @@ function findingallvalue(user){
 }
 exports.leaderboardOfAll=async(req,res)=>{
    
-const user=await User.findAll()
-const arr=await findingallvalue(user)
-res.status(200).json(arr.sort((a,b)=>b.amount-a.amount))
+const user=await User.findAll({
+    attributes:['id','name',[sequelize.fn('sum',sequelize.col('expenses.amount')),'amount']],
+    include:[{
+        model:Expense,
+        attributes:[] 
+    }],
+    group:['User.id'] ,
+    order:[['amount','DESC']]
+})
+// console.log(user)
+// const arr=await findingallvalue(user)
+res.status(200).json(user)
 }
 
