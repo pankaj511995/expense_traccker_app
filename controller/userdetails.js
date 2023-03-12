@@ -1,4 +1,5 @@
 const User=require('../models/user')
+const service=require('../service/email')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
@@ -32,14 +33,26 @@ exports.signinUser=async(req,res)=>{
     }
         const user=await User.findOne({where:{email:email}})
         bcrypt.compare(password,user.password,(err,result)=>{
-
-        if(result)  {
-            res.status(200).json({token:generateToken(user.id,user.name,user.isPremium)})
-        }
-        else res.status(404).json({message:'incorrect password'})
-     }) 
+                if(result)  {
+                    res.status(200).json({token:generateToken(user.id,user.name,user.isPremium)})
+                }
+                else res.status(404).json({message:'incorrect password'})
+             }) 
 }catch(e){
     res.status(404).json({message:'new user signup now'})
     console.log('error while sign in')
 } 
+}
+
+exports.forgotPasswordLink=async(req,res)=>{
+    try{
+    const user=await User.findOne({where:{email:req.body.email}})
+    if(user){
+        const id=await service.sendEmail(req.body.email)
+        res.status(200).json({message:'sent email'})
+    }else throw new Error()
+}catch(err){
+    res.status(400).json({message:'something went wrong'})
+    console.log('got error while sending forgot email link ')
+}
 }

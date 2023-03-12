@@ -7,7 +7,7 @@ const router=express.Router()
 router.get('/createOrder',authentication.authenticate,controller.createOrderId)
 router.post('/updateOrder',authentication.authenticate,controller.updateOrderId)
 router.post('/updateFailedOrder',authentication.authenticate,controller.failOrderStatus)
-router.get('/leaderboard',premiumFeature.leaderboardOfAll)
+router.get('/leaderboard',authentication.authenticate,premiumFeature.leaderboardOfAll)
 
 
 
