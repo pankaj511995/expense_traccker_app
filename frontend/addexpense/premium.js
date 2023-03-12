@@ -59,7 +59,7 @@ function showleaderboard(obj){
     Leaderboradshow.innerHTML=''    
     obj.forEach(e=>{
         const li=document.createElement('li')
-        li.appendChild(document.createTextNode(`Name :-> ${e.name}   : : total exp :->${e.amount}`))
+        li.appendChild(document.createTextNode(`Name :-> ${e.name}   : : total exp :->${e.totalExpense}`))
         li.className-'listitem'
       Leaderboradshow.appendChild(li)
     })

@@ -63,7 +63,7 @@ async function showAllItemOnScreen(obj,screenload){
                
             }else{
                const value=await axios.post(`http://localhost:3000/expense/addExpense`,obj,{headers:{'authorization':token}})
-                    const id=JSON.parse(value.data).id
+               const id=Number(value.data)
                     del.value=id
                     edit.value=id
                     totalAmount(obj.amount)
@@ -88,10 +88,10 @@ try{
         const amount=  e.target.parentElement.value
     if(edit){
        const value= await axios.get(`http://localhost:3000/expense/ediiAmount/${id}`,{headers:{'authorization':token}})
-        let e=JSON.parse(value.data)
-                document.getElementById('amount').value=e[0].amount
-                document.getElementById('comment').value=e[0].comment
-                document.getElementById('catagory').value=e[0].catagory
+        const{amount,comment,catagory}=value.data[0]
+                document.getElementById('amount').value=amount
+                document.getElementById('comment').value=comment
+                document.getElementById('catagory').value=catagory
             
     }
   

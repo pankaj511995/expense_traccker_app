@@ -24,6 +24,10 @@ module.exports=sequelize.define('User',{
     isPremium:{
         type:Sequelize.BOOLEAN,
         defaultValue:false
+    },
+    totalExpense:{
+    type:Sequelize.INTEGER,
+    defaultValue:0
     }
 
 })
