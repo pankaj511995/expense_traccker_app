@@ -4,39 +4,37 @@ paymentbtn.addEventListener('click',openRazorPayLink)
 
 async function openRazorPayLink(e){
     e.preventDefault()
-    // try{}catch(err){
-        // console.log('error while creating payment ')
-    // } 
-   const response=await  axios.get(`http://localhost:3000/premium/createOrder`,{headers:{'authorization':token}})
-  
-   const payopen={
-        "key":response.data.key_id,
-        "order_id":response.data.orderId,
-        "handler":  (order)=>{
-            axios.post(`http://localhost:3000/premium/updateOrder`,order,{headers:{'authorization':token}})
-     .then( async(e)=>{
-                    localStorage.setItem('username',(e.data.token))
-                    localStorage.setItem('isPremium',JSON.stringify(true))
-                    window.location.href='expense.html'
+    try{
+            const response=await  axios.get(`http://localhost:3000/premium/createOrder`,{headers:{'authorization':token}})
+            const payopen={
+                    "key":response.data.key_id,
+                    "order_id":response.data.orderId,
+                    "handler":  async(order)=>{
+                       const succ= await axios.post(`http://localhost:3000/premium/updateOrder`,order,{headers:{'authorization':token}})
+                                localStorage.setItem('username',(succ.data.token))
+                                localStorage.setItem('isPremium',JSON.stringify(true))
+                                window.location.href='expense.html'
+                         }
+                    }
+
+            const rzp=new Razorpay(payopen)
+            rzp.open()
+            rzp.on('payment.failed',(order)=>{
+                axios.post(`http://localhost:3000/premium/updateFailedOrder`,order.error.metadata,{headers:{'authorization':token}})
             })
-           
-        }
-   }
-   const rzp=new Razorpay(payopen)
-   rzp.open()
-   rzp.on('payment.failed',(order)=>{
-    axios.post(`http://localhost:3000/premium/updateFailedOrder`,order.error.metadata,{headers:{'authorization':token}})
-    console.log(order.error.metadata,'payment failed')
-   })
+
+}catch(err){
+    console.log('error while creating payment ')
+} 
 }
 
 function showpremium(){
-       
     try{
     const isPremium=localStorage.getItem('isPremium')
     if(JSON.parse(isPremium)===true){
         document.getElementById('premiumLink').remove()
         document.getElementById('leaderboard').innerHTML=` <button class="btn" >Show Leaderborad </button>` 
+        document.getElementById('downloadexpense').innerHTML=` <button class="btn" >Download Expense </button>`
     }
    
 }catch(err){
@@ -46,16 +44,36 @@ function showpremium(){
 showpremium()
 
 
-document.getElementById('leaderboard').addEventListener('click',()=>{//leaderboard
-    axios.get(`http://localhost:3000/premium/leaderboard`).then(e=>{
-    console.log(e.data)
-   
-    showleaderboard(e.data)
-    })
-    console.log('click')
+document.getElementById('leaderboard').addEventListener('click',async()=>{//leaderboard
+    try{
+        const lead=await  axios.get(`http://localhost:3000/premium/leaderboard`,{headers:{'authorization':token}})
+        showpremiumlist(lead.data)
+    }catch(err){
+        console.log('error while showing leaderboard ')
+    }
 })
 
-function showleaderboard(obj){
+document.getElementById('downloadexpense').addEventListener('click',async()=>{
+    try{
+        const lastexp=await  axios.get(`http://localhost:3000/premium/downloadexpense`,{headers:{'authorization':token}})
+        const a = document.createElement("a");
+            a.href = lastexp.data.link;
+            a.click();
+        downloadexp(lastexp.data.Location)
+        console.log(lastexp.data.Location)
+    }catch(err){
+        console.log('error while downloading expenses')
+    }
+})
+function downloadexp(obj){
+    Leaderboradshow.innerHTML=''
+    let s=''
+    obj.forEach((e,i)=>{{
+        s+=`<a href=${e.location} > Expense${i+1} </a> at ${e.createdAt.split('T')[0]}<br>`
+    }})
+    Leaderboradshow.innerHTML=s
+}
+function showpremiumlist(obj){
     Leaderboradshow.innerHTML=''    
     obj.forEach(e=>{
         const li=document.createElement('li')
@@ -63,7 +81,4 @@ function showleaderboard(obj){
         li.className-'listitem'
       Leaderboradshow.appendChild(li)
     })
-  
-
-
 }
