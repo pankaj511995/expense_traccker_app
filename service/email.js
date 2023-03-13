@@ -1,6 +1,6 @@
 const Sib=require('sib-api-v3-sdk')
 require('dotenv').config()
-exports.sendEmail=(email)=>{
+exports.sendEmail=(email,id)=>{
     return new Promise((resolve,reject)=>{
             const Client=Sib.ApiClient.instance
             const apiKey=Client.authentications['api-key']
@@ -20,8 +20,11 @@ exports.sendEmail=(email)=>{
                     sender,
                     to:recever,
                     subject:'this is span testing api only',
-                    textContent:'hi pankaj how are you'
+                    textContent:'hi reset your password',
+                    htmlContent:
+                    `<a href=http://localhost:3000/user/passwordlink/${id}>click hear </a>`
                 }).then(e=>{
+                    
             resolve(e.messageId)
         }).catch(err=>reject(err))
 

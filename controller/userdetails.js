@@ -1,5 +1,4 @@
 const User=require('../models/user')
-const service=require('../service/email')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
@@ -44,15 +43,3 @@ exports.signinUser=async(req,res)=>{
 } 
 }
 
-exports.forgotPasswordLink=async(req,res)=>{
-    try{
-    const user=await User.findOne({where:{email:req.body.email}})
-    if(user){
-        const id=await service.sendEmail(req.body.email)
-        res.status(200).json({message:'sent email'})
-    }else throw new Error()
-}catch(err){
-    res.status(400).json({message:'something went wrong'})
-    console.log('got error while sending forgot email link ')
-}
-}

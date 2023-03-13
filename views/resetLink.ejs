@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+    body{
+    background-color: rgb(91, 36, 142);
+}
+    .form-div{
+   
+   background-color: rgba(119, 186, 119, 0.776);
+ 
+   color: rgb(15, 14, 14);
+   width: 450px;
+   height: 320px;
+   padding-top: 10px;
+   text-align: center;
+   border-radius: 30px;
+   position: absolute;
+   right: 30%;
+   left: 5%;
+   box-shadow: rgb(14, 218, 218);
+  
+}
+.enter{
+    border-radius: 15px;
+     width: 50%;
+     margin: .4rem;
+     border-style: none;
+ }
+ .btn{
+    width: 130px;
+    font-weight: 600;
+    height: 30px;
+    background-color: rgba(27, 27, 211, 0.982);
+    color: wheat;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: rgb(4, 114, 59);
+}
+#error{
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+
+   </style>
+</head>
+<body>
+    <header>
+
+    </header>
+    <main>
+        <div class="form-div">
+            <strong class="sign">Reset yout password</strong><br><div id="error"></div><br>
+        <form action="" class="form-control">
+            <input type="hidden" id="params" value="<%=id%>">
+            <label for="email">Enter your password:-</label><br>
+                <input type="password" id="password1" class="enter" required><br>
+            <label for="phone">Enter your Password:-</label><br>
+                 <input type="password" id="password2" class="enter" required><br>
+               <br><br><br>
+                 <input type="submit" id="forgot" class="btn" value="Change Password">
+        </form><br>
+      
+        </div>
+    </main>
+   
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script >
+        const param=document.getElementById('params').value
+ document.getElementById('forgot').addEventListener('click',async(e)=>{
+    try{
+            e.preventDefault()
+            
+            const password1=document.getElementById('password1').value
+            const password2=document.getElementById('password2').value
+            if(password1!=password2){
+                message('please enter same password in both field')
+            }else{
+                const obj={
+                    password1:password1,
+                    password2:password2
+                }
+                await axios.post(`http://localhost:3000/user/passwordlink/${param}`,obj)
+                message('password has changed try to sign in with same password')
+            }
+    }catch(err){
+                message('something went wrong')
+            }
+        })
+
+        
+        function message(e){
+            document.getElementById('error').innerHTML=e
+        }
+    </script>
+</body>
+
+</html>

@@ -1,10 +1,12 @@
 const express=require('express')
 const controller=require('../controller/userdetails')
-const authentication=require('../middleware/autho')
+const forgotpassword=require('../controller/forgotpassword')
 
 const router=express.Router()
 router.post('/signup',controller.signupUser)
 router.post('/signin',controller.signinUser)
-router.post('/forgotPassword',controller.forgotPasswordLink)
+router.post('/forgotPassword',forgotpassword.forgotPasswordLink)
+router.get('/passwordlink/:id',forgotpassword.sendPasswordLink)
+router.post('/passwordlink/:id',forgotpassword.updatePassword)
 
 module.exports=router 
