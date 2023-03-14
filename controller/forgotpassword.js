@@ -1,10 +1,9 @@
-const bcrypt1=require('../service/repete')
 const uuid=require('uuid')
 const User=require('../models/user')
 const sequelize=require('../util/sequelize')
 const forgotPassword=require('../models/forgotPassword')
 const service=require('../service/email')
-
+const serviceRepet=require('../service/repete')
 
 exports.forgotPasswordLink=async(req,res)=>{
     const t = await sequelize.transaction();
@@ -20,8 +19,7 @@ exports.forgotPasswordLink=async(req,res)=>{
     }else throw new Error()
 }catch(err){
     await t.rollback()
-    res.status(400).json({message:'something went wrong'})
-    console.log('got error while sending forgot email link ')
+    serviceRepet.error(res,'something went wrong','error while sending forgot email link')
 } 
 }
 exports.sendPasswordLink=(req,res)=>{
@@ -41,7 +39,7 @@ exports.updatePassword=async(req,res)=>{
 
         const f=await forgotPassword.findOne({where:{id:req.params.id}})
             if(f.isActive){
-                const hash=await  bcrypt1.bcryptpassword(password1)
+                const hash=await  serviceRepet.bcryptpassword(password1)
                  const p1= User.update({password:hash},{where:{id:f.UserId},transaction:t})
                  const p2=forgotPassword.update({isActive:false},{where:{id:req.params.id},transaction:t})
                     await Promise.all([p1,p2])
@@ -52,7 +50,6 @@ exports.updatePassword=async(req,res)=>{
            
     }catch(err){
         await t.rollback()
-        res.status(400).json({passwordchanged:true})
-    console.log('error while updating reset password')
+        serviceRepet.error(res,'something went wrong','error while updating reset password')
     }
 }

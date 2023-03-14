@@ -1,5 +1,4 @@
 const Sib=require('sib-api-v3-sdk')
-require('dotenv').config()
 exports.sendEmail=(email,id)=>{
     return new Promise((resolve,reject)=>{
             const Client=Sib.ApiClient.instance

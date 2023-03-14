@@ -1,4 +1,3 @@
-require('dotenv').config()
 const AWS=require('aws-sdk')
 exports.S3BucketUpload=(data,email)=>{
     const filename=`expenseAll${email}/${new Date().getTime()}.txt`

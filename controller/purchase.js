@@ -1,7 +1,7 @@
 const Order=require('../models/orders')
 const sequelize=require('../util/sequelize')
 const payment=require('../service/razorpay')
-const jwttoken=require('../service/repete')
+const serviceRepet=require('../service/repete')
 exports.createOrderId=async(req,res)=>{
   try{
             const order=await payment.createOrder()        
@@ -9,8 +9,7 @@ exports.createOrderId=async(req,res)=>{
             res.status(200).json({orderId:order.id,key_id:process.env.RAZ_KEY})
     
 }catch(err){
-    res.status(400).json({message:'something went wrong'})
-    console.log('error while creating payment link')
+    serviceRepet.error(res,'something went wrong','error while creating payment link')
   }
 }
 
@@ -22,10 +21,10 @@ exports.updateOrderId=async (req,res)=>{
         const p2=req.user.update({isPremium:true},{transaction:t})
         await Promise.all([p1,p2])
         await t.commit()
-        res.status(200).json({token:jwttoken.generateToken(req.user.id,req.user.name,true)})
+        res.status(200).json({token:serviceRepet.generateToken(req.user.id,req.user.name,true)})
     }catch(err){
         await t.rollback();
-        console.log('got error while uploading payment details')
+        serviceRepet.error(res,'something went wrong','error while uploading payment link')
     }
 }
 exports.failOrderStatus=async(req,res)=>{
@@ -34,6 +33,6 @@ exports.failOrderStatus=async(req,res)=>{
        await Order.update({paymentId: payment_id,status:'FAILED'},{where:{orderId: order_id,UserId:req.user.id}})
       
     }catch(err){
-        console.log('got error while uploading failed status')
+        serviceRepet.error(res,'something went wrong','error while while uploading failed status')
     }
 }

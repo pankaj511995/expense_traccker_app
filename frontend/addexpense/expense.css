@@ -1,6 +1,9 @@
 body{
     background-color: rgb(91, 36, 142);
 }
+.hide{
+    display: none;
+}
 .form-div{
     background-color: rgba(119, 186, 119, 0.776);
     color: rgb(15, 14, 14);
@@ -38,19 +41,21 @@ body{
 
 .per-page{
     position: absolute;
-    right: 5%;
-    width: 40px;
+    /* right: 2%; */
     border-color: #09d9f5;
     font-weight: 700;
 }
-
-.page-btn{
+#previousPage,#currentPage,#nextPage,#lastpage{
     position: relative;
-    width: 40px;
+    left: 50%;
+    text-align: center;
+    
     font-weight: 700;
 }
-.page-btn:active,.page-btn:hover{
-background-color: rgb(173, 159, 194);
+
+#currentPage{
+height: 30px;
+background-color: wheat;
 }
 
 #page-number{

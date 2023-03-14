@@ -1,8 +1,9 @@
 .form-div{
    
     background-color: rgba(119, 186, 119, 0.776);
+  
     color: rgb(15, 14, 14);
-    width: 700px;
+    width: 450px;
     height: 320px;
     padding-top: 10px;
     text-align: center;
@@ -26,6 +27,7 @@
     border-radius: 15px;
      width: 50%;
      margin: .4rem;
+     border-style: none;
  }
  .btn{
     width: 130px;
@@ -50,5 +52,5 @@
     border-style: none;
 }
 body{
-    background-color: rgb(91, 36, 142);
+    background-color: rgba(215, 206, 224, 0.466);
 }

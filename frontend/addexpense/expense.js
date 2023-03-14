@@ -1,24 +1,15 @@
 const token=localStorage.getItem('username')
+const perpageItem=localStorage.getItem('perpage_item')
+const perpage=document.getElementById('per-page')
+perpage.addEventListener('click',()=> {
+    localStorage.setItem('perpage_item',perpage.value)
+    paginationcontent(currentpagedom.value)
+} )
 
 document.getElementById('addExpense').addEventListener('click',addExpense)
 const addItem=document.getElementById('addItem')
 addItem.addEventListener('click',editDeletebtn)
-
-window.addEventListener('DOMContentLoaded', async() => {
-    try{
-    const value= await axios.get(`http://localhost:3000/expense/showexpense`,{headers:{'authorization':token}})
-      JSON.parse(value.data).forEach(e=>{
-            totalAmount(e.amount)
-            showAllItemOnScreen(e,true)
-          
-
-    }) 
     
-}catch(err){
-    console.log('error while onloading')
-}
-    
-});
 function addExpense(e){
     try{    
     e.preventDefault()    
@@ -72,8 +63,9 @@ async function showAllItemOnScreen(obj,screenload){
                
             }
      }catch(e){ 
-         document.getElementById('error').innerHTML=`something went wrong`
-        console.log('error while adding item',e) }            
+        console.log(e.response.data.message)
+         document.getElementById('error').innerHTML=e.response.data.message
+        console.log('error while adding item') }            
     
 }
 
@@ -110,5 +102,77 @@ function totalAmount(amount){
             total.innerHTML=`Tottal Expense <button class="totalamount" >${total.value}</button>`
           
     }
+async function totalgetamount(){
+    const value= await axios.get(`http://localhost:3000/expense/totalAmount`,{headers:{'authorization':token}})
+    totalAmount(value.data)
+}
+ 
+window.addEventListener('DOMContentLoaded',() => {
+        perpage.value=localStorage.getItem('perpage_item')
+        paginationcontent(0)
+        totalgetamount()
+    });
 
+
+const nextpagedom= document.getElementById('nextPage')
+const currentpagedom=document.getElementById('currentPage')
+const previouspagedom= document.getElementById('previousPage')
+const lastpagedom=document.getElementById('lastpage')
+const showcurrentpage=(currentPage)=>{
+    currentpagedom.value=Number(currentPage)
+    currentpagedom.innerHTML=currentPage+1}
+const showNextPage=(nextpage)=>{
+    nextpagedom.innerHTML=`<button value=${nextpage}>${nextpage+1}</button>`}
+const showPreviouspage=(previouspage)=>{
+    previouspagedom.innerHTML=`<button value=${previouspage}>${previouspage+1}</button> `}
+const showLastPage=(lastpage)=>{
+    lastpagedom.innerHTML=`........<button value=${lastpage}>${lastpage+1}</button>`}
+nextpagedom.addEventListener('click',changepageNumber)
+currentpagedom.addEventListener('click',changepageNumber)
+previouspagedom.addEventListener('click',changepageNumber)
+lastpagedom.addEventListener('click',changepageNumber)
+
+function changepageNumber(e){
+    paginationcontent(Number(e.target.value))
+    console.log('click',e.target)
+}
+async function paginationcontent(pageNo){
+    const obj={
+        perpage:localStorage.getItem('perpage_item'),
+        pageNo:pageNo
+    }
+    const value= await axios.post(`http://localhost:3000/expense/pagination`,obj,{headers:{'authorization':token}})
+    pagination(value.data.pageObj)
+    addItem.innerHTML=''
+    value.data.expnese.forEach(e=> showAllItemOnScreen(e,true) )
+}
+
+function pagination({
+    currentPage,
+    hasNextpage,
+    nextpage,
+    hasPreviouspage,
+    previouspage,
+    lastpage}){
+        showcurrentpage(currentPage)
+        if(hasNextpage){
+            showNextPage(nextpage)
+        } else {
+            nextpagedom.innerHTML=''
+        }
+        if(hasPreviouspage){
+            showPreviouspage(previouspage)
+        }else {
+            previouspagedom.innerHTML=''
+        }
+        if(lastpage<2){
+            lastpagedom.innerHTML=''
+        }else  {
+            showLastPage(lastpage)
+        }
+        
+        
+}
+
+    
     
