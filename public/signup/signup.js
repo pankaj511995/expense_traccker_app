@@ -1,4 +1,4 @@
-const url='35.174.176.200'
+const url='localhost'
 document.querySelector('#signup').addEventListener('click', (e)=>{
     e.preventDefault()
     

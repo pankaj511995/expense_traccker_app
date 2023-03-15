@@ -1,6 +1,5 @@
 const express =require('express')
 require('dotenv').config()
-// const helmet=require('helmet')
 const path=require('path')
 const bodyparser=require('body-parser')
 const cors=require('cors')
@@ -9,26 +8,21 @@ const userdata=require('./router/userRout')
 const allExpense=require('./router/expenseRout')
 const allpremiumfeature=require('./router/prem')
 const app=express()
-app.use(cors()) 
-// app.use(helmet()) 
+app.use(cors())  
 app.use(bodyparser.json({extended :false}))
-app.set('view engine', 'ejs');  
-app.set('views', 'views');  
 
 
-//All user related  
 app.use('/user',userdata) 
-//All expense table related
 app.use('/expense',allExpense)
-// only for premium user rerlated
 app.use('/premium',allpremiumfeature)
-// other then above route
+
 app.use((req,res)=> {
+    console.log(req.url,'got url ')
     res.sendFile(path.join(__dirname,`public/${req.url}`))
 })
 
 
-//table creation
+//table creation 
 const User=require('./models/user')
 const Expense=require('./models/expense')
 const Order=require('./models/orders')

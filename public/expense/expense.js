@@ -1,4 +1,4 @@
-const url='35.174.176.200'
+const url='localhost'
 const token=localStorage.getItem('username')
 const perpageItem=localStorage.getItem('perpage_item')
 const perpage=document.getElementById('per-page')
