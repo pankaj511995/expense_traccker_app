@@ -65,6 +65,8 @@ document.getElementById('downloadexpense').addEventListener('click',async()=>{
         console.log('error while downloading expenses')
     }
 })
+
+
 function downloadexp(obj){
     Leaderboradshow.innerHTML=''
     let s=''

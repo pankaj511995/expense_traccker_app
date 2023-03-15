@@ -1,6 +1,6 @@
 const express =require('express')
 require('dotenv').config()
-const helmet=require('helmet')
+// const helmet=require('helmet')
 const path=require('path')
 const bodyparser=require('body-parser')
 const cors=require('cors')
@@ -10,10 +10,10 @@ const allExpense=require('./router/expenseRout')
 const allpremiumfeature=require('./router/prem')
 const app=express()
 app.use(cors()) 
-app.use(helmet())
+// app.use(helmet()) 
 app.use(bodyparser.json({extended :false}))
 app.set('view engine', 'ejs');  
-app.set('views', 'views'); 
+app.set('views', 'views');  
 
 
 //All user related  
@@ -24,7 +24,6 @@ app.use('/expense',allExpense)
 app.use('/premium',allpremiumfeature)
 // other then above route
 app.use((req,res)=> {
-    console.log(req.url)
     res.sendFile(path.join(__dirname,`public/${req.url}`))
 })
 
