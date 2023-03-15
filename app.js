@@ -48,7 +48,7 @@ Download.belongsTo(User)
 
 sequelize.sync()
 .then(e=>
-    app.listen(3000)
+    app.listen(process.env.PORT)
     )
 .catch(e=>console.log('got error'))
       
