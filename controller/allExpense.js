@@ -57,10 +57,11 @@ exports.paginationofExpense=async(req,res)=>{
         const perPage=Number(perpage)
         const count=await req.user.countExpenses()
         const exp= await req.user.getExpenses({ offset:pageNumber*perPage,  limit :perPage })
+
         let lastpage=(Math.ceil(count/perPage)-1)       
         const obj={
             currentPage:pageNumber,
-            hasNextpage: (count/perPage)>pageNumber+1,
+            hasNextpage: lastpage>=pageNumber+1,
             nextpage:pageNumber+1,
             hasPreviouspage:pageNumber>0,
             previouspage:pageNumber-1,

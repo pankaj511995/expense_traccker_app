@@ -1,10 +1,10 @@
 const Order=require('../models/orders')
 const sequelize=require('../util/sequelize')
-const payment=require('../service/razorpay')
+const servicepayment=require('../service/razorpay')
 const serviceRepet=require('../service/repete')
 exports.createOrderId=async(req,res)=>{
   try{
-            const order=await payment.createOrder()        
+            const order=await servicepayment.createOrder()        
             await req.user.createOrder({orderId:order.id,status:'PENDING'})
             res.status(200).json({orderId:order.id,key_id:process.env.RAZ_KEY})
     

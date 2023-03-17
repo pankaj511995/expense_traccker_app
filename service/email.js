@@ -18,7 +18,7 @@ exports.sendEmail=(email,id)=>{
                 sendEmailApi.sendTransacEmail({
                     sender,
                     to:recever,
-                    subject:'this is span testing api only',
+                    subject:'this is for testing api only',
                     textContent:'hi reset your password',
                     htmlContent:
                     `<a href=http://localhost:3000/user/passwordlink/${id}>click hear </a>`

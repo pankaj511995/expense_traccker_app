@@ -5,7 +5,7 @@ const bcrypt=require('bcrypt')
 exports.validate=(res,message,one,two,three)=>{
     return new Promise((resolve,reject)=>{
         if(one==='' ||two==='' || three===''){
-        return res.status(400).json({message:message})
+             return res.status(400).json({message:message})
         }else{
             resolve('success')
         }
@@ -25,6 +25,17 @@ exports.premium=(res,isPremium)=>{
 }
 
 exports.generateToken=(id,name,isPremium)=>jwt.sign({id,name,isPremium},process.env.JWT_TOKEN)
+exports.verify=(token,secrate)=>{
+    return new Promise((resolve,reject)=>{
+        jwt.verify(token,secrate,(err,token)=>{
+            if(token){
+               resolve(token)
+            }else{
+                reject(err)
+            }
+        })
+    })
+}
 
 exports.bcryptpassword=(password)=>{
     return new Promise((resolve,reject)=>{
@@ -39,17 +50,17 @@ exports.bcryptpassword=(password)=>{
     })
 }
 
-exports.compair=(p1,p2)=>{
+exports.compair=(res,p1,p2)=>{
     return new Promise((resolve,reject)=>{
         bcrypt.compare(p1,p2,((err,result)=>{
             if(result)  {
               resolve(result)
             }else{
-                
-                reject(err)
+                return res.status(400).json({message:"incorrect password"}) 
+              
             }
         }))
     })
-}
+} 
 
 

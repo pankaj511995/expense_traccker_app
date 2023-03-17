@@ -8,10 +8,10 @@ exports.leaderboardOfAll=async(req,res)=>{
                  attributes:['id','name','totalExpense'],
                  order:[['totalExpense','DESC']]
                 })
-        res.status(200).json(user)
+        res.status(200).json(user) 
     }catch(err){
         serviceRepet.error(res,'join premium to enjoy this feature','error while printing leaderboard')
-}
+    }
 }
 exports.downloadAllExpenseLink= async(req,res)=>{
     try{
@@ -21,8 +21,8 @@ exports.downloadAllExpenseLink= async(req,res)=>{
             await req.user.createDownload({location:location})
         const url=await req.user.getDownloads({attributes:['location','createdAt']})
         res.status(200).json({Location:url,link:location})
-}catch(err){
+    }catch(err){
     serviceRepet.error(res,'join premium to enjoy this feature','error while downloading all expense')
-}
+    }
 }
 

@@ -17,10 +17,10 @@ exports.signinUser=async(req,res)=>{
     const {email,password}=req.body
     await serviceRepet.validate(res,'please fill all details',email,password)
         const user=await User.findOne({where:{email:email}})
-       await serviceRepet.compair(password,user.password)
+       await serviceRepet.compair(res,password,user.password)
         res.status(200).json({token:serviceRepet.generateToken(user.id,user.name,user.isPremium)})
 }catch(e){
-    serviceRepet.error(res,'incorrect password','error while sign in')
+    serviceRepet.error(res,'email does not exit','error while sign in')
 } 
 }
 

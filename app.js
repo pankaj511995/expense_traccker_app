@@ -29,6 +29,7 @@ const Order=require('./models/orders')
 const forgotPassword=require('./models/forgotPassword')
 const Download=require('./models/download')
 
+
 User.hasMany(Expense)
 Expense.belongsTo(User)
 User.hasMany(Order)
@@ -39,9 +40,9 @@ User.hasMany(Download)
 Download.belongsTo(User)
 
 
-sequelize.sync()
-.then(e=>
+// sequelize.sync()
+// .then(e=>
     app.listen(process.env.PORT)
-    )
-.catch(e=>console.log('got error'))
+//     )
+// .catch(e=>console.log('got error'))
       
